@@ -17,7 +17,7 @@ char c[100];
 int k = 0, prima = 0, l = 0;
 
 HWND HwndLabel1, HwndLabel2, HwndLabel3;
-HWND but1, but2, but3, but4, but5, but6, but7, but8, but9, first, op, ad, prod;
+HWND but1, but2, but3, but4, but5, but6, but7, but8, but9, first, op, ad, prod,but0;
 
 
 
@@ -26,7 +26,7 @@ void adunare(HWND hwnd, char num1[], char num2[])
 	int a[255], b[255], sum[255];
 	int ac = 0, bc = 0, sc = 0;
 	int reminder = 0, i;
-	char *pa, *pb;
+	char *pa, *pb,*q;
 
 
 	pa = num1; //pointer to first number
@@ -69,10 +69,12 @@ void adunare(HWND hwnd, char num1[], char num2[])
 
 
 	printf("Adunarea : ");
-	for (i = sc - 1; i >= 0; i--) {
+	for (i = sc-1; i>=0; i--) {
 		c[i] = sum[i] + '0';
+		
+		
 	}
-
+	_strrev(c);
 	MessageBox(hwnd, c, "Adunarea", MB_OK);
 
 	CreateWindow("STATIC", c,
@@ -220,6 +222,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
 					  but7 = CreateWindowW(L"Button", L"7", WS_VISIBLE | WS_CHILD, 30, 150, 45, 25, hwnd, (HMENU)9, NULL, NULL);
 					  but8 = CreateWindowW(L"Button", L"8", WS_VISIBLE | WS_CHILD, 80, 150, 45, 25, hwnd, (HMENU)10, NULL, NULL);
 					  but9 = CreateWindowW(L"Button", L"9", WS_VISIBLE | WS_CHILD, 135, 150, 45, 25, hwnd, (HMENU)11, NULL, NULL);
+					  but0 = CreateWindowW(L"Button", L"0", WS_VISIBLE | WS_CHILD, 100, 180, 45, 25, hwnd, (HMENU)17, NULL, NULL);
 
 					  ShowWindow(first, SW_HIDE);
 					  ShowWindow(op, SW_HIDE);
@@ -271,8 +274,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
 								   ShowWindow(but7, SW_HIDE);
 								   ShowWindow(but8, SW_HIDE);
 								   ShowWindow(but9, SW_HIDE);
+								   ShowWindow(but0, SW_HIDE);
 
-								 
+
+								  
+					   }; break;
 
 
 					   case 3: {
@@ -314,6 +320,26 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
 									   ShowWindow(HwndLabel2, SW_HIDE);
 								   }
 					   }; break;
+					   case 17: {
+
+								   if (!prima)
+								   {
+									   s[k] = '0';
+									   k++;
+
+									   ShowWindow(first, SW_SHOW);
+									   ShowWindow(HwndLabel1, SW_HIDE);
+								   }
+								   else
+								   {
+									   t[l] = '0';
+									   l++;
+
+									   ShowWindow(op, SW_SHOW);
+									   ShowWindow(HwndLabel2, SW_HIDE);
+								   }
+					   }; break;
+						   
 
 					   case 5: {
 
@@ -454,6 +480,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg,
 										ShowWindow(HwndLabel2, SW_HIDE);
 									}
 					   }; break;
+
 
 					   case 12: {
 									adunare(hwnd, s, t);
